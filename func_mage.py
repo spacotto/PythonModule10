@@ -8,7 +8,7 @@ Usage: python3 func_mage.py
 
 
 # ----------------------------------------------------------------------------
-#  Visual helpers
+#  Colors
 # ----------------------------------------------------------------------------
 
 def color(code: int, text: str) -> str:
@@ -33,7 +33,7 @@ def color(code: int, text: str) -> str:
 
 
 # ----------------------------------------------------------------------------
-#  Import
+#  Imports
 # ----------------------------------------------------------------------------
 
 import os
@@ -64,7 +64,7 @@ from lambda_spells import mage_stats
 
 
 # ----------------------------------------------------------------------------
-#  Import
+#  Enums
 # ----------------------------------------------------------------------------
 
 class MageNames(str, Enum):
@@ -171,30 +171,66 @@ def generate_mages(count: int) -> List[Dict[str, Any]]:
         mages.append(mage)
         return mages
 
-def generate_artifacts(count: int = 5) -> List[Dict[str, Any]]:
+
+def generate_artifacts(count: int) -> List[Dict[str, Any]]:
     """Generate a list of magical artifacts."""
     artifacts = []
     for _ in range(count):
         artifact = {
-            'name': random.choice(ARTIFACT_NAMES),
+            'name': random.choice(list(ArtifactNames)),
             'power': random.randint(60, 120),
-            'type': random.choice(ARTIFACT_TYPES)
+            'type': random.choice(list(ArtifactTypes))
         }
         artifacts.append(artifact)
     return artifacts
 
-def generate_spells(count: int = 6) -> List[str]:
-    """Generate a list of spell names."""
-    return random.sample(SPELL_NAMES, min(count, len(SPELL_NAMES)))
 
-def generate_spell_powers(count: int = 5) -> List[int]:
+def generate_spells(count: int) -> List[str]:
+    """Generate a list of spell names."""
+    return random.sample(SpellNames, min(count, len(list(SpellNames))))
+
+
+def generate_spell_powers(count: int) -> List[int]:
     """Generate a list of spell power values."""
     return [random.randint(10, 50) for _ in range(count)]
 
-def generate_enchantment_items(count: int = 5) -> List[str]:
-    """Generate a list of items to be enchanted."""
-    return random.sample(items, min(count, len(items)))
 
+def generate_enchantment_items(count: int) -> List[str]:
+    """Generate a list of items to be enchanted."""
+    return random.sample(Items, min(count, len(Items)))
+
+
+# ----------------------------------------------------------------------------
+#  Exercise 0: Lambda Sanctum
+# ----------------------------------------------------------------------------
+
+class LambdaSanctum():
+
+    def __init__(self) -> None:
+        self._artifacts = generate_artifacts(random.randint(5, 10))
+        self._mages = generate_mages(random.randint(5, 10))
+        self._spells = generate_spells((random.randint(5, 10))
+
+    def run_test(self) -> None:
+
+        try:
+
+            print()
+            print(" " + "-" * 60)
+            print(color(7, ' 💫 Exercise 0: Lambda Sanctum'))
+            print(" " + "-" * 60)
+
+            print()
+            print(color(6, ' Testing Valid Station'))
+            print(" " + "-" * 60)
+
+    sorted_artifacts = artifact_sorter(artifacts)
+
+    # --- Test power_filter()
+
+    # --- Test spell_transformer()
+
+    # --- Test mage_stats()
 
 # ----------------------------------------------------------------------------
 #  FuncMage Chronicles
@@ -227,7 +263,7 @@ def func_mage() -> None:
         choice = input(color(3, ' 🪄 Enter your choice (0/1/2/3/4): '))
 
         if choice == "0":
-            pass
+            lambda_sanctum()
         elif choice == "1":
             pass
         elif choice == "2":
