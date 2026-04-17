@@ -64,10 +64,6 @@ from lambda_spells import (artifact_sorter, power_filter,
 from higher_magic import (spell_combiner, power_amplifier,
                           conditional_caster, spell_sequence)
 
-from higher_magic import (fireball, heal, shield, lightning, freeze,
-                          earthquake, tornado, tsunami, flash, darkness,
-                          meteor, blizzard)
-
 # ----------------------------------------------------------------------------
 #  Enums
 # ----------------------------------------------------------------------------
@@ -118,18 +114,18 @@ class SpellNames(str, Enum):
 
 
 class SpellFunctions(Enum):
-    FIREBALL = fireball
-    HEAL = heal
-    SHIELD = shield
-    LIGHTNING = lightning
-    FREEZE = freeze
-    EARTHQUAKE = earthquake
-    TORNADO = tornado
-    TSUNAMI = tsunami
-    FLASH = flash
-    DARKNESS = darkness
-    METEOR = meteor
-    BLIZZARD = blizzard
+    FIREBALL = ('fireball', 'Fireball deals', 'damage(s) to')
+    HEAL = ('heal', 'Heal restores', 'HP for')
+    SHIELD = ('shield', 'Shield deflects', 'from')
+    LIGHTNING = ('lightning', 'Lightning deals', 'damage(s) to')
+    FREEZE = ('freeze', 'Freeze deals', 'damage(s) to')
+    EARTHQUAKE = ('earthquake', 'Earthquake deals', 'damage(s) to')
+    TORNADO = ('tornado', 'Tornado deals', 'damage(s) to')
+    TSUNAMI = ('tsunami', 'Tsunami deals', 'damage(s) to')
+    FLASH = ('flash', 'Flash deals', 'damage(s) to')
+    DARKNESS = ('darkness', 'Darkness deals', 'damage(s) to')
+    METEOR = ('meteor', 'Meteor deals', 'damage(s) to')
+    BLIZZARD = ('blizzard', 'Blizzard deals', 'damage(s) to')
 
 
 class ArtifactNames(str, Enum):
@@ -214,6 +210,16 @@ def generate_spells(count: int) -> List[str]:
 def generate_spell_powers(count: int) -> List[int]:
     """Generate a list of spell power values."""
     return [random.randint(10, 50) for _ in range(count)]
+
+
+def generate_spell_functions(count: int) -> List[Callable]:
+    grimoire: List[Callable] = []
+    for _ in range(count):
+        name, effect1, effect2 = random.choice(list(SpellFunctions)).value
+        def name(target: str, power: int) -> str:
+            return f'{effect1} {power} {effect2} {target}'
+        grimoire.append(name)
+    return grimoire
 
 
 def generate_enchantment_items(count: int) -> List[str]:
@@ -310,13 +316,14 @@ class LambdaSanctum():
 
         for idx in range(len(self._mages)):
             n = str(idx + 1)
-            print(f' {color(7, f"{n}. {self._mages[idx]['name']}"):<27}'
-                  f'{self._mages[idx]['power']}')
+            mage = color(7, f"{n}. {self._mages[idx]['name']}")
+            power = f"{self._mages[idx]['power']}"
+            print(f" {mage:<27}{power}")
 
         print(" " + "-" * 60)
-        print(f' {color(7, f"{"Maximum Power":<15}")} {ms["max_power"]}')
-        print(f' {color(7, f"{"Minimum Power":<15}")} {ms["min_power"]}')
-        print(f' {color(7, f"{"Average Power":<15}")} {ms["avg_power"]:.1f}')
+        print(f' {color(7, "Maximum Power"):<27}{ms["max_power"]}')
+        print(f' {color(7, "Minimum Power"):<27}{ms["min_power"]}')
+        print(f' {color(7, "Average Power"):<27}{ms["avg_power"]:.1f}')
 
 
 # ----------------------------------------------------------------------------

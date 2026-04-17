@@ -100,46 +100,6 @@ def heal(target: str, power: int) -> str:
     return f'Heal restores {target} for {power} HP'
 
 
-def shield(target: str, power: int) -> str:
-    return f"Shield protects {target} with {power} defense"
-
-
-def lightning(target: str, power: int) -> str:
-    return f'Lightning deals {power} damage(s) to {target}'
-
-
-def freeze(target: str, power: int) -> str:
-    return f'Freeze deals {power} damage(s) to {target}'
-
-
-def earthquake(target: str, power: int) -> str:
-    return f'Earthquake deals {power} damage(s) to {target}'
-
-
-def tornado(target: str, power: int) -> str:
-    return f'Tornado deals {power} damage(s) to {target}'
-
-
-def tsunami(target: str, power: int) -> str:
-    return f'Tsunami deals {power} damage(s) to {target}'
-
-
-def flash(target: str, power: int) -> str:
-    return f'Flash deals {power} damage(s) to {target}'
-
-
-def darkness(target: str, power: int) -> str:
-    return f'Darkness deals {power} damage(s) to {target}'
-
-
-def meteor(target: str, power: int) -> str:
-    return f'Meteor deals {power} damage(s) to {target}'
-
-
-def blizzard(target: str, power: int) -> str:
-    return f'Blizzard deals {power} damage(s) to {target}'
-
-
 # ----------------------------------------------------------------------------
 #  Testing...
 # ----------------------------------------------------------------------------
@@ -155,7 +115,7 @@ def main() -> None:
         print()
         print(color(3, ' Testing spell combiner...'))
         combined = spell_combiner(fireball, heal)
-        c = combined(test_targets[0], test_values[0])
+        c = combined(test_targets[1], test_values[1])
         print(f' Combined spell result: {c[0]}, {c[1]}')
 
     except Exception as e:

@@ -4,7 +4,7 @@ Exercise 0: Lambda Sanctum
 
 
 # ----------------------------------------------------------------------------
-#  Visual helpers
+#  Colors
 # ----------------------------------------------------------------------------
 
 def color(code: int, text: str) -> str:
@@ -95,8 +95,8 @@ def main() -> None:
         print()
         print(color(3, ' Testing artifact sorter...'))
         x = artifact_sorter(artifacts)
-        print(f' {x[0]['name']} ({x[0]['power']} power) comes before'
-              f' {x[1]['name']} ({x[1]['power']} power)')
+        print(f" {x[0]['name']} ({x[0]['power']} power) comes before"
+              f" {x[1]['name']} ({x[1]['power']} power)")
 
     except Exception as e:
         print()
