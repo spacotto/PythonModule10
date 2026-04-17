@@ -41,6 +41,7 @@ import sys
 import random
 from enum import Enum
 from typing import List, Dict, Any
+from collections.abc import Callable
 
 
 def pathfinder(folder_name: str) -> None:
@@ -57,11 +58,15 @@ for F in FOLDERS:
     except ImportError as e:
         print(f' ERROR! Could not import  {F} — {e}')
 
-from lambda_spells import artifact_sorter
-from lambda_spells import power_filter
-from lambda_spells import spell_transformer
-from lambda_spells import mage_stats
+from lambda_spells import (artifact_sorter, power_filter,
+                           spell_transformer, mage_stats)
 
+from higher_magic import (spell_combiner, power_amplifier,
+                          conditional_caster, spell_sequence)
+
+from higher_magic import (fireball, heal, shield, lightning, freeze,
+                          earthquake, tornado, tsunami, flash, darkness,
+                          meteor, blizzard)
 
 # ----------------------------------------------------------------------------
 #  Enums
@@ -110,6 +115,21 @@ class SpellNames(str, Enum):
     DARKNESS = "darkness"
     METEOR = "meteor"
     BLIZZARD = "blizzard"
+
+
+class SpellFunctions(Enum):
+    FIREBALL = fireball
+    HEAL = heal
+    SHIELD = shield
+    LIGHTNING = lightning
+    FREEZE = freeze
+    EARTHQUAKE = earthquake
+    TORNADO = tornado
+    TSUNAMI = tsunami
+    FLASH = flash
+    DARKNESS = darkness
+    METEOR = meteor
+    BLIZZARD = blizzard
 
 
 class ArtifactNames(str, Enum):
@@ -297,6 +317,34 @@ class LambdaSanctum():
         print(f' {color(7, f"{"Maximum Power":<15}")} {ms["max_power"]}')
         print(f' {color(7, f"{"Minimum Power":<15}")} {ms["min_power"]}')
         print(f' {color(7, f"{"Average Power":<15}")} {ms["avg_power"]:.1f}')
+
+
+# ----------------------------------------------------------------------------
+#  Exercise 1: Higher Realm
+# ----------------------------------------------------------------------------
+
+class HigherRealm():
+
+    def __init__(self) -> None:
+        pass
+
+    def run_test(self) -> None:
+
+        print()
+        print(" " + "-" * 60)
+        print(color(7, ' 🪄 Exercise 1: Higher Realm'))
+        print(" " + "-" * 60)
+
+        tests = [('Combining spells', self._run_spell_combiner),
+                  ('Amplifying power', self._run_power_amplifier),
+                  ('Casting conditionally', self._run_conditional_caster),
+                  ('Creating spell sequence', self._run_spell_sequence)]
+
+        for test in tests:
+            print()
+            print(color(3, f' {test[0]}...'))
+            print(" " + "-" * 60)
+            test[1]()
 
 
 # ----------------------------------------------------------------------------
