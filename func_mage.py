@@ -114,18 +114,18 @@ class SpellNames(str, Enum):
 
 
 class SpellFunctions(Enum):
-    FIREBALL = ('fireball', 'Fireball deals', 'damage(s) to')
+    FIREBALL = ('fireball', 'Fireball deals', 'damages to')
     HEAL = ('heal', 'Heal restores', 'HP for')
     SHIELD = ('shield', 'Shield deflects', 'from')
-    LIGHTNING = ('lightning', 'Lightning deals', 'damage(s) to')
-    FREEZE = ('freeze', 'Freeze deals', 'damage(s) to')
-    EARTHQUAKE = ('earthquake', 'Earthquake deals', 'damage(s) to')
-    TORNADO = ('tornado', 'Tornado deals', 'damage(s) to')
-    TSUNAMI = ('tsunami', 'Tsunami deals', 'damage(s) to')
-    FLASH = ('flash', 'Flash deals', 'damage(s) to')
-    DARKNESS = ('darkness', 'Darkness deals', 'damage(s) to')
-    METEOR = ('meteor', 'Meteor deals', 'damage(s) to')
-    BLIZZARD = ('blizzard', 'Blizzard deals', 'damage(s) to')
+    LIGHTNING = ('lightning', 'Lightning deals', 'damage to')
+    FREEZE = ('freeze', 'Freeze deals', 'damage to')
+    EARTHQUAKE = ('earthquake', 'Earthquake deals', 'damage to')
+    TORNADO = ('tornado', 'Tornado deals', 'damage to')
+    TSUNAMI = ('tsunami', 'Tsunami deals', 'damage to')
+    FLASH = ('flash', 'Flash deals', 'damage to')
+    DARKNESS = ('darkness', 'Darkness deals', 'damage to')
+    METEOR = ('meteor', 'Meteor deals', 'damage to')
+    BLIZZARD = ('blizzard', 'Blizzard deals', 'damage to')
 
 
 class ArtifactNames(str, Enum):
@@ -171,6 +171,13 @@ class Items(str, Enum):
     CLOAK = "Cloak"
 
 
+class Targets(str, Enum):
+    DRAGON = "Dragon"
+    GOBLIN = "Goblin"
+    WIZARD = "Wizard"
+    KNIGHT = "Knight"
+
+
 # ----------------------------------------------------------------------------
 #  Generators
 # ----------------------------------------------------------------------------
@@ -212,14 +219,11 @@ def generate_spell_powers(count: int) -> List[int]:
     return [random.randint(10, 50) for _ in range(count)]
 
 
-def generate_spell_functions(count: int) -> List[Callable]:
-    grimoire: List[Callable] = []
-    for _ in range(count):
-        name, effect1, effect2 = random.choice(list(SpellFunctions)).value
-        def name(target: str, power: int) -> str:
-            return f'{effect1} {power} {effect2} {target}'
-        grimoire.append(name)
-    return grimoire
+def generate_spell_function() -> List[Callable]:
+    name, effect1, effect2 = random.choice(list(SpellFunctions)).value
+    def name(target: str, power: int) -> str:
+        return f'{effect1} {power} {effect2} {target}'
+    return name
 
 
 def generate_enchantment_items(count: int) -> List[str]:
@@ -352,6 +356,23 @@ class HigherRealm():
             print(color(3, f' {test[0]}...'))
             print(" " + "-" * 60)
             test[1]()
+        print()
+
+    def _run_spell_combiner(self) -> None:
+        combined = spell_combiner(generate_spell_function(),
+                                  generate_spell_function())
+        target = random.choice(list(Targets)).value
+        x, y = combined(target, random.randint(5, 25))
+        print(f' {x}\n {y}')
+
+    def _run_power_amplifier(self) -> None:
+        pass
+
+    def _run_conditional_caster(self) -> None:
+        pass
+
+    def _run_spell_sequence(self) -> None:
+        pass
 
 
 # ----------------------------------------------------------------------------
@@ -374,7 +395,7 @@ def func_mage() -> None:
     print(f" {'0':<5}{'Lambda Sanctum':<20}"
           "Use lambda to manipulate data")
     print(f" {'1':<5}{'Higher Realm':<20}"
-          "...")
+          "Use Callable to create functions")
     print(f" {'2':<5}{'Memory Depths':<20}"
           "...")
     print(f" {'3':<5}{'Ancient Library':<20}"
@@ -388,7 +409,7 @@ def func_mage() -> None:
     if choice == "0":
         LambdaSanctum().run_test()
     elif choice == "1":
-        pass
+        HigherRealm().run_test()
     elif choice == "2":
         pass
     elif choice == "3":

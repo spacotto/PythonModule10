@@ -1,6 +1,10 @@
 # Project
 data_generator.py
 
+# tmp
+*.swp
+*.swo
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
