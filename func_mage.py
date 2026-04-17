@@ -169,7 +169,7 @@ def generate_mages(count: int) -> List[Dict[str, Any]]:
             'element': random.choice(list(Elements)).value
         }
         mages.append(mage)
-        return mages
+    return mages
 
 
 def generate_artifacts(count: int) -> List[Dict[str, Any]]:
@@ -187,7 +187,8 @@ def generate_artifacts(count: int) -> List[Dict[str, Any]]:
 
 def generate_spells(count: int) -> List[str]:
     """Generate a list of spell names."""
-    return random.sample(list(SpellNames), min(count, len(list(SpellNames))))
+    spells = [spell.value for spell in SpellNames]
+    return random.sample(spells, min(count, len(spells)))
 
 
 def generate_spell_powers(count: int) -> List[int]:
@@ -238,25 +239,64 @@ class LambdaSanctum():
 
         for idx in range(len(self._artifacts)):
             n = str(idx + 1)
-            before_name = self._artifacts[idx]['name']
-            before_power = self._artifacts[idx]['power']
-            after_name = sorted_artifacts[idx]['name']
-            after_power = sorted_artifacts[idx]['power']
 
-            before_str = f"[{before_power:03}] {before_name}"
-            after_str = f"[{after_power:03}] {after_name}"
+            bn = self._artifacts[idx]['name']
+            bp = self._artifacts[idx]['power']
+            before = f"[{bp:03}] {bn}"
 
-            print(f' {color(7, f"{n:<4}")} {before_str:<25}{after_str}')
+            an = sorted_artifacts[idx]['name']
+            ap = sorted_artifacts[idx]['power']
+            after = f"[{ap:03}] {an}"
+
+            print(f' {color(7, f"{n:<4}")} {before:<25}{after}')
 
 
     def _run_power_filter(self) -> None:
-        filt_pow = power_filter(self._mages, random.randint(50, 100))
+        filt_pow = power_filter(self._mages, random.randint(75, 100))
+        print(color(7, f' {"n.":<5}{"Before filter":<25}After filter'))
+        print(" " + "-" * 60)
+
+        for idx in range(len(self._mages)):
+            n = str(idx +1)
+
+            bn = self._mages[idx]['name']
+            bp = self._mages[idx]['power']
+            before = f"[{bp:03}] {bn}"
+
+            if idx < len(filt_pow):
+                an = filt_pow[idx]['name']
+                ap = filt_pow[idx]['power']
+                after = f"[{ap:03}] {an}"
+            else:
+                after = "-"
+
+            print(f' {color(7, f"{n:<4}")} {before:<25}{after}')
+
 
     def _run_spell_transformer(self) -> None:
         trans_spells = spell_transformer(self._spells)
+        print(color(7, f' {"n.":<5}{"Before transformation":<25}After transformation'))
+        print(" " + "-" * 60)
+
+        for idx in range(len(self._spells)):
+            n = str(idx + 1)
+            before = self._spells[idx]
+            after = trans_spells[idx]
+
+            print(f' {color(7, f"{n:<4}")} {before:<25}{after}')
 
     def _run_mage_stats(self) -> None:
         ms = mage_stats(self._mages)
+
+        for idx in range(len(self._mages)):
+            n = str(idx + 1)
+            print(f' {color(7, f"{n}. {self._mages[idx]['name']}"):<27}'
+                  f'{self._mages[idx]['power']}')
+
+        print(" " + "-" * 60)
+        print(f' {color(7, f"{"Maximum Power":<15}")} {ms["max_power"]}')
+        print(f' {color(7, f"{"Minimum Power":<15}")} {ms["min_power"]}')
+        print(f' {color(7, f"{"Average Power":<15}")} {ms["avg_power"]:.1f}')
 
 
 # ----------------------------------------------------------------------------
@@ -274,17 +314,17 @@ def func_mage() -> None:
     print(" Which exercise would you like to test?")
 
     print()
-    print(color(7, f" {'n.':<5}{'Exercise':<30}{'Description'}"))
+    print(color(7, f" {'n.':<5}{'Exercise':<20}{'Description'}"))
     print(" " + "-" * 60)
-    print(f" {'0':<5}{'Lambda Sanctum':<30}"
+    print(f" {'0':<5}{'Lambda Sanctum':<20}"
+          "Use lambda to manipulate data")
+    print(f" {'1':<5}{'Higher Realm':<20}"
           "...")
-    print(f" {'1':<5}{'Higher Realm':<30}"
+    print(f" {'2':<5}{'Memory Depths':<20}"
           "...")
-    print(f" {'2':<5}{'Memory Depths':<30}"
+    print(f" {'3':<5}{'Ancient Library':<20}"
           "...")
-    print(f" {'3':<5}{'Ancient Library':<30}"
-          "...")
-    print(f" {'4':<5}{'Master’s Tower':<30}"
+    print(f" {'4':<5}{'Master’s Tower':<20}"
           "...")
 
     print()
