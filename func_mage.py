@@ -164,9 +164,9 @@ def generate_mages(count: int) -> List[Dict[str, Any]]:
     mages = []
     for _ in range(count):
         mage = {
-            'name': random.choice(list(MageNames)),
+            'name': random.choice(list(MageNames)).value,
             'power': random.randint(50, 100),
-            'element': random.choice(list(Elements))
+            'element': random.choice(list(Elements)).value
         }
         mages.append(mage)
         return mages
@@ -177,9 +177,9 @@ def generate_artifacts(count: int) -> List[Dict[str, Any]]:
     artifacts = []
     for _ in range(count):
         artifact = {
-            'name': random.choice(list(ArtifactNames)),
+            'name': random.choice(list(ArtifactNames)).value,
             'power': random.randint(60, 120),
-            'type': random.choice(list(ArtifactTypes))
+            'type': random.choice(list(ArtifactTypes)).value
         }
         artifacts.append(artifact)
     return artifacts
@@ -187,7 +187,7 @@ def generate_artifacts(count: int) -> List[Dict[str, Any]]:
 
 def generate_spells(count: int) -> List[str]:
     """Generate a list of spell names."""
-    return random.sample(SpellNames, min(count, len(list(SpellNames))))
+    return random.sample(list(SpellNames), min(count, len(list(SpellNames))))
 
 
 def generate_spell_powers(count: int) -> List[int]:
@@ -197,7 +197,7 @@ def generate_spell_powers(count: int) -> List[int]:
 
 def generate_enchantment_items(count: int) -> List[str]:
     """Generate a list of items to be enchanted."""
-    return random.sample(Items, min(count, len(Items)))
+    return random.sample(list(Items), min(count, len(list(Items))))
 
 
 # ----------------------------------------------------------------------------
@@ -209,28 +209,55 @@ class LambdaSanctum():
     def __init__(self) -> None:
         self._artifacts = generate_artifacts(random.randint(5, 10))
         self._mages = generate_mages(random.randint(5, 10))
-        self._spells = generate_spells((random.randint(5, 10))
+        self._spells = generate_spells(random.randint(5, 10))
 
     def run_test(self) -> None:
 
-        try:
+        print()
+        print(" " + "-" * 60)
+        print(color(7, ' 🪄 Exercise 0: Lambda Sanctum'))
+        print(" " + "-" * 60)
 
+        tests = [('Sorting artifacts', self._run_artifact_sorter),
+                  ('Filtering power', self._run_power_filter),
+                  ('Transforming spells', self._run_spell_transformer),
+                  ('Analysing mages', self._run_mage_stats)]
+
+        for test in tests:
             print()
+            print(color(3, f' {test[0]}...'))
             print(" " + "-" * 60)
-            print(color(7, ' 💫 Exercise 0: Lambda Sanctum'))
-            print(" " + "-" * 60)
+            test[1]()
 
-            print()
-            print(color(6, ' Testing Valid Station'))
-            print(" " + "-" * 60)
+        print()
 
-    sorted_artifacts = artifact_sorter(artifacts)
+    def _run_artifact_sorter(self) -> None:
+        sorted_artifacts = artifact_sorter(self._artifacts)
+        print(color(7, f' {"n.":<5}{"Before sort":<25}After sort'))
+        print(" " + "-" * 60)
 
-    # --- Test power_filter()
+        for idx in range(len(self._artifacts)):
+            n = str(idx + 1)
+            before_name = self._artifacts[idx]['name']
+            before_power = self._artifacts[idx]['power']
+            after_name = sorted_artifacts[idx]['name']
+            after_power = sorted_artifacts[idx]['power']
 
-    # --- Test spell_transformer()
+            before_str = f"[{before_power:03}] {before_name}"
+            after_str = f"[{after_power:03}] {after_name}"
 
-    # --- Test mage_stats()
+            print(f' {color(7, f"{n:<4}")} {before_str:<25}{after_str}')
+
+
+    def _run_power_filter(self) -> None:
+        filt_pow = power_filter(self._mages, random.randint(50, 100))
+
+    def _run_spell_transformer(self) -> None:
+        trans_spells = spell_transformer(self._spells)
+
+    def _run_mage_stats(self) -> None:
+        ms = mage_stats(self._mages)
+
 
 # ----------------------------------------------------------------------------
 #  FuncMage Chronicles
@@ -238,42 +265,43 @@ class LambdaSanctum():
 
 def func_mage() -> None:
     """Interactive UI."""
-        print()
-        print(" " + "-" * 60)
-        print(color(3, ' 🪄 WELCOME FUNC MAGE!'))
-        print(" " + "-" * 60)
-        print(" This program will help you test the exercises of this module.")
-        print(" Which exercise would you like to test?")
 
-        print()
-        print(color(7, f" {'n.':<5}{'Exercise':<30}{'Description'}"))
-        print(" " + "-" * 60)
-        print(f" {'0':<5}{'Lambda Sanctum':<30}"
-              "...")
-        print(f" {'1':<5}{'Higher Realm':<30}"
-              "...")
-        print(f" {'2':<5}{'Memory Depths':<30}"
-              "...")
-        print(f" {'3':<5}{'Ancient Library':<30}"
-              "...")
-        print(f" {'4':<5}{'Master’s Tower':<30}"
-              "...")
+    print()
+    print(" " + "-" * 60)
+    print(color(3, ' 🪄 WELCOME FUNC MAGE!'))
+    print(" " + "-" * 60)
+    print(" This program will help you test the exercises of this module.")
+    print(" Which exercise would you like to test?")
 
-        print()
-        choice = input(color(3, ' 🪄 Enter your choice (0/1/2/3/4): '))
+    print()
+    print(color(7, f" {'n.':<5}{'Exercise':<30}{'Description'}"))
+    print(" " + "-" * 60)
+    print(f" {'0':<5}{'Lambda Sanctum':<30}"
+          "...")
+    print(f" {'1':<5}{'Higher Realm':<30}"
+          "...")
+    print(f" {'2':<5}{'Memory Depths':<30}"
+          "...")
+    print(f" {'3':<5}{'Ancient Library':<30}"
+          "...")
+    print(f" {'4':<5}{'Master’s Tower':<30}"
+          "...")
 
-        if choice == "0":
-            lambda_sanctum()
-        elif choice == "1":
-            pass
-        elif choice == "2":
-            pass
-        elif choice == "3":
-            pass
-        elif choice == "4":
-            pass
-        else:
-            print(color(5, ' ERROR! Invalid choice! Please enter 0, 1, 2, 3, or 4'))
+    print()
+    choice = input(color(3, ' 🪄 Enter your choice (0/1/2/3/4): '))
+
+    if choice == "0":
+        LambdaSanctum().run_test()
+    elif choice == "1":
+        pass
+    elif choice == "2":
+        pass
+    elif choice == "3":
+        pass
+    elif choice == "4":
+        pass
+    else:
+        print(color(5, ' ERROR! Invalid choice! Please enter 0, 1, 2, 3, or 4'))
 
 
 if __name__ == "__main__":
