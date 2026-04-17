@@ -69,6 +69,10 @@ def conditional_caster(condition: Callable, spell: Callable) -> Callable:
     • If condition fails, return "Spell fizzled"
     • Both condition and spell receive the same arguments
     """
+    def cast_if(target: str, power: int) -> str:
+        if condition(target, power):
+            return spell(target, power)
+        return "Spell fizzled"
     return cast_if
 
 
@@ -79,6 +83,8 @@ def spell_sequence(spells: list[Callable]) -> Callable:
     • Each spell receives the same arguments
     • Returns a list of all spell results
     """
+    def cast_all(target: str, power: int) -> list[str]:
+        return [spell(target, power) for spell in spells]
     return cast_all
 
 
