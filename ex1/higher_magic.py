@@ -59,7 +59,7 @@ def power_amplifier(base_spell: Callable, multiplier: int) -> Callable:
     """
     def amplified(target: str, power: int) -> str:
         return base_spell(target, power * multiplier)
-    return amplified(base_spell, multiplier)
+    return amplified
 
 
 def conditional_caster(condition: Callable, spell: Callable) -> Callable:
@@ -126,8 +126,9 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing power amplifier...'))
+        print(' Before    ' + fireball(test_targets[1], 10))
         mega_fireball = power_amplifier(fireball, 3)
-        print(mega_fireball(test_targets[1], 10))
+        print(' After     ' + mega_fireball(test_targets[1], 10))
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))

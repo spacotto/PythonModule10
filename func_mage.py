@@ -219,7 +219,7 @@ def generate_spell_powers(count: int) -> List[int]:
     return [random.randint(10, 50) for _ in range(count)]
 
 
-def generate_spell_function() -> List[Callable]:
+def generate_spell_function() -> Callable:
     name, effect1, effect2 = random.choice(list(SpellFunctions)).value
     def name(target: str, power: int) -> str:
         return f'{effect1} {power} {effect2} {target}'
@@ -366,7 +366,15 @@ class HigherRealm():
         print(f' {x}\n {y}')
 
     def _run_power_amplifier(self) -> None:
-        pass
+        spell = generate_spell_function()
+        amplified_spell = power_amplifier(spell, random.randint(5, 25))
+        target = random.choice(list(Targets)).value
+        power = random.randint(5, 25)
+
+        print(f' {color(7, "Spell"):<30}'
+              f'{spell(target, power)}')
+        print(f' {color(7, "Amplified spell"):<30}'
+              f'{amplified_spell(target, power)}')
 
     def _run_conditional_caster(self) -> None:
         pass
