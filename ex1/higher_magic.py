@@ -115,7 +115,7 @@ def main() -> None:
         print()
         print(color(3, ' Testing spell combiner...'))
         combined = spell_combiner(fireball, heal)
-        c = combined(test_targets[1], test_values[1])
+        c = combined(test_targets[0], test_values[0])
         print(f' Combined spell result: {c[0]}, {c[1]}')
 
     except Exception as e:
@@ -126,9 +126,8 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing power amplifier...'))
-        print(power_amplifier(10, 3))
         mega_fireball = power_amplifier(fireball, 3)
-        print('Original: 10, Amplified: 30')
+        print(mega_fireball(test_targets[1], 10))
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
