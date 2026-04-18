@@ -515,7 +515,7 @@ class AncientLibrary():
         tests = [('Transforming spells power', self._run_spell_reducer),
                   ('Partially enchanting', self._run_partial_enchanter),
                   ('Memoizing Fibonacci', self._run_memoized_fibonacci),
-                  ('...', self._run_spell_dispatcher)]
+                  ('Dispatching spells', self._run_spell_dispatcher)]
 
         for test in tests:
             print()
