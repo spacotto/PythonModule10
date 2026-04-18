@@ -170,11 +170,12 @@ def main() -> None:
         vault = memory_vault()
         store, recall = vault['store'], vault['recall']
 
-        #to_store = 42
-        store(key='secret', value=42)
-        print(f'Store {key} = {value}')
-        print(f'Recall {key}: {recall(key)}')
-        print(f'Recall "unknown": {recall("unknown")}')
+        key = 'secret'
+        value = 42
+        store(key, value)
+        print(f' Store "{key}" = {value}')
+        print(f' Recall "{key}": {recall(key)}')
+        print(f' Recall "unknown": {recall("unknown")}')
 
 
     except Exception as e:

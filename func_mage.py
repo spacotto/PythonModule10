@@ -425,7 +425,7 @@ class MemoryDepths():
         tests = [('Counting spells', self._run_mage_counter),
                   ('Accumulating power', self._run_spell_accumulator),
                   ('Enchanting items', self._run_enchantment_factory),
-                  ('Managing memory', self._run_memory_vault)]
+                  ('Memorizing spells', self._run_memory_vault)]
 
         for test in tests:
             print()
@@ -460,7 +460,17 @@ class MemoryDepths():
             print(f' {enchanter(item_to_enchant)}')
 
     def _run_memory_vault(self) -> None:
-        pass
+        vault = memory_vault()
+        store, recall = vault['store'], vault['recall']
+
+        spells = random.sample([spell.value for spell in SpellNames], 2)
+        known, unknown = spells[0], spells[1]
+        power = random.randint(1, 100)
+
+        store(known, power)
+        print(f' Memorizing spell: {known} ({power})')
+        print(f" Recalling {known}'s power: {recall(known)}")
+        print(f" Recalling {unknown}'s power: {recall(unknown)}")
 
 
 # ----------------------------------------------------------------------------
