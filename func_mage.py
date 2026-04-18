@@ -114,18 +114,18 @@ class SpellNames(str, Enum):
 
 
 class SpellFunctions(Enum):
-    FIREBALL = ('fireball', 'Fireball deals', 'damages to')
-    HEAL = ('heal', 'Heal restores', 'HP for')
-    SHIELD = ('shield', 'Shield deflects', 'from')
-    LIGHTNING = ('lightning', 'Lightning deals', 'damage to')
-    FREEZE = ('freeze', 'Freeze deals', 'damage to')
-    EARTHQUAKE = ('earthquake', 'Earthquake deals', 'damage to')
-    TORNADO = ('tornado', 'Tornado deals', 'damage to')
-    TSUNAMI = ('tsunami', 'Tsunami deals', 'damage to')
-    FLASH = ('flash', 'Flash deals', 'damage to')
-    DARKNESS = ('darkness', 'Darkness deals', 'damage to')
-    METEOR = ('meteor', 'Meteor deals', 'damage to')
-    BLIZZARD = ('blizzard', 'Blizzard deals', 'damage to')
+    FIREBALL = ('fireball', 'Fireball burns', '-')
+    HEAL = ('heal', 'Heal restores', '+')
+    SHIELD = ('shield', 'Shield protects', '+')
+    LIGHTNING = ('lightning', 'Lightning shocks', '-')
+    FREEZE = ('freeze', 'Freeze damages', '-')
+    EARTHQUAKE = ('earthquake', 'Earthquake damages', '-')
+    TORNADO = ('tornado', 'Tornado damages', '-')
+    TSUNAMI = ('tsunami', 'Tsunami damages', '-')
+    FLASH = ('flash', 'Flash blinds', '-')
+    DARKNESS = ('darkness', 'Darkness damages', '-')
+    METEOR = ('meteor', 'Meteor damages', '-')
+    BLIZZARD = ('blizzard', 'Blizzard damages', '-')
 
 
 class ArtifactNames(str, Enum):
@@ -179,7 +179,7 @@ class Targets(str, Enum):
 
 
 # ----------------------------------------------------------------------------
-#  Generators
+#  Helpers
 # ----------------------------------------------------------------------------
 
 def generate_mages(count: int) -> List[Dict[str, Any]]:
@@ -214,21 +214,25 @@ def generate_spells(count: int) -> List[str]:
     return random.sample(spells, min(count, len(spells)))
 
 
-def generate_spell_powers(count: int) -> List[int]:
-    """Generate a list of spell power values."""
-    return [random.randint(10, 50) for _ in range(count)]
-
-
 def generate_spell_function() -> Callable:
-    name, effect1, effect2 = random.choice(list(SpellFunctions)).value
-    def name(target: str, power: int) -> str:
-        return f'{effect1} {power} {effect2} {target}'
-    return name
+    fn_name, effect, mod = random.choice(list(SpellFunctions)).value
+    def fn_name(target: str, power: int) -> str:
+        return f'{effect} {target}: {mod}{power} HP'
+    return fn_name
 
 
 def generate_enchantment_items(count: int) -> List[str]:
     """Generate a list of items to be enchanted."""
     return random.sample(list(Items), min(count, len(list(Items))))
+
+
+def valid_cast(target: str, power: int) -> bool:
+    valid_targets = [target.value for target in Targets]
+    if target not in valid_targets:
+        return False
+    if power < 1:
+        return False
+    return True
 
 
 # ----------------------------------------------------------------------------
@@ -349,7 +353,7 @@ class HigherRealm():
         tests = [('Combining spells', self._run_spell_combiner),
                   ('Amplifying power', self._run_power_amplifier),
                   ('Casting conditionally', self._run_conditional_caster),
-                  ('Creating spell sequence', self._run_spell_sequence)]
+                  ('Casting spell sequence', self._run_spell_sequence)]
 
         for test in tests:
             print()
@@ -362,8 +366,9 @@ class HigherRealm():
         combined = spell_combiner(generate_spell_function(),
                                   generate_spell_function())
         target = random.choice(list(Targets)).value
-        x, y = combined(target, random.randint(5, 25))
-        print(f' {x}\n {y}')
+        s1, s2 = combined(target, random.randint(5, 25))
+        print(f' {color(7, "Spell 1"):<24}{s1}')
+        print(f' {color(7, "Spell 2"):<24}{s2}')
 
     def _run_power_amplifier(self) -> None:
         spell = generate_spell_function()
@@ -371,16 +376,30 @@ class HigherRealm():
         target = random.choice(list(Targets)).value
         power = random.randint(5, 25)
 
-        print(f' {color(7, "Spell"):<30}'
-              f'{spell(target, power)}')
-        print(f' {color(7, "Amplified spell"):<30}'
-              f'{amplified_spell(target, power)}')
+        print(f' {color(7, "Base"):<24}{spell(target, power)}')
+        print(f' {color(7, "Amplified"):<24}{amplified_spell(target, power)}')
 
     def _run_conditional_caster(self) -> None:
-        pass
+        cast_if = conditional_caster(valid_cast, generate_spell_function())
+        target = random.choice(list(Targets)).value
+        power = random.randint(5, 25)
+        print(f' {color(6, 'All good'):<24}{cast_if(target, power)}')
+        print(f' {color(5, 'Bad target'):<24}{cast_if('Banana', power)}')
+        print(f' {color(5, 'Bad power'):<24}{cast_if(target, random.randint(-100, 0))}')
 
     def _run_spell_sequence(self) -> None:
-        pass
+        to_cast: list = []
+        for _ in range(random.randint(5, 10)):
+            spell = generate_spell_function()
+            to_cast.append(spell)
+
+        cast_all = spell_sequence(to_cast)
+
+        target = random.choice(list(Targets)).value
+        power = random.randint(5, 25)
+        casted = cast_all(target, power)
+        for spell in casted:
+            print(f' {spell}')
 
 
 # ----------------------------------------------------------------------------

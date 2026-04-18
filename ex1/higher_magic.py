@@ -2,6 +2,14 @@
 Exercise 1: Higher Realm
 """
 
+
+# ----------------------------------------------------------------------------
+#  Imports
+# ----------------------------------------------------------------------------
+
+from collections.abc import Callable
+
+
 # ----------------------------------------------------------------------------
 #  Colors
 # ----------------------------------------------------------------------------
@@ -25,13 +33,6 @@ def color(code: int, text: str) -> str:
         color = colors[7]
 
     return f'{color}{text}{colors[0]}'
-
-
-# ----------------------------------------------------------------------------
-#  Imports
-# ----------------------------------------------------------------------------
-
-from collections.abc import Callable
 
 
 # ----------------------------------------------------------------------------
@@ -100,6 +101,15 @@ def heal(target: str, power: int) -> str:
     return f'Heal restores {target} for {power} HP'
 
 
+def is_valid(target: str, power: int) -> bool:
+    valid_targets = ["Dragon", "Goblin", "Wizard", "Knight"]
+    if target not in valid_targets:
+        return False
+    if power < 1:
+        return False
+    return True
+
+
 # ----------------------------------------------------------------------------
 #  Testing...
 # ----------------------------------------------------------------------------
@@ -138,7 +148,13 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing conditional caster...'))
-        print(conditional_caster())
+        cast_if = conditional_caster(is_valid, fireball)
+        print(f' {color(6, 'Valid test'):<30}'
+              f'{cast_if(test_targets[2], test_values[1])}')
+        print(f' {color(5, 'Invalid target'):<30}'
+              f'{cast_if('lol', test_values[1])}')
+        print(f' {color(5, 'Invalid power'):<30}'
+              f'{cast_if(test_targets[2], -1)}')
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
@@ -148,7 +164,10 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing spell sequence...'))
-        print(spell_sequence())
+        cast_all = spell_sequence([fireball, heal])
+        spells = cast_all(test_targets[3], test_values[2])
+        for spell in spells:
+            print()
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
