@@ -403,6 +403,35 @@ class HigherRealm():
 
 
 # ----------------------------------------------------------------------------
+#  Exercise 2: Memory Depths
+# ----------------------------------------------------------------------------
+
+class MemoryDepths():
+
+    def __init__(self) -> None:
+        pass
+
+    def run_test(self) -> None:
+
+        print()
+        print(" " + "-" * 60)
+        print(color(7, ' 🪄 Exercise 2: Memory Depths'))
+        print(" " + "-" * 60)
+
+        tests = [('Combining spells', self._run_spell_combiner),
+                  ('Amplifying power', self._run_power_amplifier),
+                  ('Casting conditionally', self._run_conditional_caster),
+                  ('Casting spell sequence', self._run_spell_sequence)]
+
+        for test in tests:
+            print()
+            print(color(3, f' {test[0]}...'))
+            print(" " + "-" * 60)
+            test[1]()
+        print()
+
+
+# ----------------------------------------------------------------------------
 #  FuncMage Chronicles
 # ----------------------------------------------------------------------------
 
