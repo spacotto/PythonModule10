@@ -422,9 +422,9 @@ class MemoryDepths():
         print(color(7, ' 🪄 Exercise 2: Memory Depths'))
         print(" " + "-" * 60)
 
-        tests = [('Counting closure', self._run_mage_counter),
+        tests = [('Counting spells', self._run_mage_counter),
                   ('Accumulating power', self._run_spell_accumulator),
-                  ('Enchantmenting functions', self._run_enchantment_factory),
+                  ('Enchanting items', self._run_enchantment_factory),
                   ('Managing memory', self._run_memory_vault)]
 
         for test in tests:
@@ -448,12 +448,16 @@ class MemoryDepths():
     def _run_spell_accumulator(self) -> None:
         initial_power = random.randint(0, 1000)
         accumulator = spell_accumulator(initial_power)
-        for _ in range(random.randint(2, 5)):
+        for _ in range(5):
             amount = random.randint(0, 1000)
             print(f' Base {initial_power}, add {amount}: {accumulator(amount)}')
 
     def _run_enchantment_factory(self) -> None:
-        pass
+        enchantment_type = random.choice(list(EnchantmentTypes)).value
+        enchanter = enchantment_factory(enchantment_type)
+        for _ in range(5):
+            item_to_enchant = random.choice(list(Items)).value
+            print(f' {enchanter(item_to_enchant)}')
 
     def _run_memory_vault(self) -> None:
         pass

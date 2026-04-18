@@ -80,6 +80,9 @@ def enchantment_factory(enchantment_type: str) -> Callable:
     • Format: "enchantment_type item_name" (e.g., "Flaming Sword")
     • Each factory creates functions with different enchantment types
     """
+    def enchanter(item_name: str) -> str:
+        return f"{enchantment_type} {item_name}"
+    return enchanter
 
 
 def memory_vault() -> dict[str, Callable]:
@@ -98,11 +101,6 @@ def memory_vault() -> dict[str, Callable]:
 # ----------------------------------------------------------------------------
 
 def main() -> None:
-
-    initial_powers = [100, 150, 200, 250, 300]
-    power_additions = [20, 30]
-    enchantment_types = ['Flaming', 'Shocking', 'Frozen']
-    items_to_enchant = ['Cloak', 'Armor', 'Wand', 'Amulet']
 
     # --- Testing mage_counter()
 
@@ -123,6 +121,9 @@ def main() -> None:
 
     # --- Testing spell_accumulator()
 
+    initial_powers = [100, 150, 200, 250, 300]
+    power_additions = [20, 30]
+
     try:
         print()
         print(color(3, ' Testing Spell Accumulator...'))
@@ -136,9 +137,18 @@ def main() -> None:
 
     # --- Testing enchantment_factory()
 
+    enchantment_types = ['Flaming', 'Frozen', 'Shocking']
+    items_to_enchant = ['Sword', 'Shield', 'Cloak', 'Armor', 'Wand']
+
     try:
         print()
         print(color(3, ' Testing Enchantment Factory...'))
+
+        enchanter_a = enchantment_factory(enchantment_types[0])
+        print(f' {enchanter_a(items_to_enchant[0])}')
+
+        enchanter_b = enchantment_factory(enchantment_types[1])
+        print(f' {enchanter_b(items_to_enchant[1])}')
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
