@@ -77,9 +77,9 @@ def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
     • Each version pre-filling power=50 and the element
     """
     return {
-        'flaming': functools.partial(base_enchantment, 50, 'Flaming'),
-        'frozen': functools.partial(base_enchantment, 50, 'Frozen'),
-        'shocking': functools.partial(base_enchantment, 50, 'Shocking')
+        'fire': functools.partial(base_enchantment, 50, 'Fire'),
+        'ice': functools.partial(base_enchantment, 50, 'Ice'),
+        'lightning': functools.partial(base_enchantment, 50, 'Lightning')
     }
 
 
@@ -129,6 +129,14 @@ def spell_dispatcher() -> Callable[[Any], str]:
 
 
 # ----------------------------------------------------------------------------
+#  Helpers
+# ----------------------------------------------------------------------------
+
+def base_enchantment(power: int, element: str, target: str) -> str:
+    return f'{target} enchanted into {element} {target} (+{power} power)'
+
+
+# ----------------------------------------------------------------------------
 #  Testing...
 # ----------------------------------------------------------------------------
 
@@ -156,6 +164,9 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing partial enchanter...'))
+        pe = partial_enchanter(base_enchantment)
+        for k, v in pe.items():
+            print(' ' + v('Sword'))
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))

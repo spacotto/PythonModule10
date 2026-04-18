@@ -229,11 +229,6 @@ def generate_spell_function() -> Callable:
     return fn_name
 
 
-def generate_enchantment_items(count: int) -> List[str]:
-    """Generate a list of items to be enchanted."""
-    return random.sample(list(Items), min(count, len(list(Items))))
-
-
 def valid_cast(target: str, power: int) -> bool:
     valid_targets = [target.value for target in Targets]
     if target not in valid_targets:
@@ -241,6 +236,10 @@ def valid_cast(target: str, power: int) -> bool:
     if power < 1:
         return False
     return True
+
+
+def base_enchantment(power: int, element: str, target: str) -> str:
+    return f'{target} enchanted into {element} {target} (+{power} power)'
 
 
 # ----------------------------------------------------------------------------
@@ -494,7 +493,7 @@ class AncientLibrary():
         print(" " + "-" * 60)
 
         tests = [('Transforming spells power', self._run_spell_reducer),
-                  ('...', self._run_partial_enchanter),
+                  ('Partially enchanting', self._run_partial_enchanter),
                   ('...', self._run_memoized_fibonacci),
                   ('...', self._run_spell_dispatcher)]
 
@@ -521,7 +520,10 @@ class AncientLibrary():
             print(f' {color(7, k):<22}{spell_reducer(spell_powers, v)}')
 
     def _run_partial_enchanter(self) -> None:
-        pass
+       pe = partial_enchanter(base_enchantment)
+       target = random.choice(list(Items)).value
+       for k, v in pe.items():
+           print(' ' + v(target))
 
     def _run_memoized_fibonacci(self) -> None:
         pass
