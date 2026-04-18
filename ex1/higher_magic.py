@@ -167,7 +167,7 @@ def main() -> None:
         cast_all = spell_sequence([fireball, heal])
         spells = cast_all(test_targets[3], test_values[2])
         for spell in spells:
-            print()
+            print(f' {spell}')
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
