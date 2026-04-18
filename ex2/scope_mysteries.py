@@ -93,7 +93,15 @@ def memory_vault() -> dict[str, Callable]:
     • ’recall’ fn: takes (k) and returns stored v or "Memory not found"
     • Use closure to maintain private memory storage
     """
-    pass
+    vault = {}
+
+    def store(key: str, value) -> None:
+        vault[key] = value
+
+    def recall(key: str):
+        return vault.get(key, 'Memory not found')
+
+    return {'store': store, 'recall': recall}
 
 
 # ----------------------------------------------------------------------------
@@ -158,6 +166,16 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing Memory Vault...'))
+
+        vault = memory_vault()
+        store, recall = vault['store'], vault['recall']
+
+        #to_store = 42
+        store(key='secret', value=42)
+        print(f'Store {key} = {value}')
+        print(f'Recall {key}: {recall(key)}')
+        print(f'Recall "unknown": {recall("unknown")}')
+
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
