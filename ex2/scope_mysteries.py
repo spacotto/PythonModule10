@@ -177,7 +177,6 @@ def main() -> None:
         print(f' Recall "{key}": {recall(key)}')
         print(f' Recall "unknown": {recall("unknown")}')
 
-
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
 
