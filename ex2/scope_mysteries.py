@@ -40,18 +40,56 @@ def color(code: int, text: str) -> str:
 # ----------------------------------------------------------------------------
 
 def mage_counter() -> Callable:
-    pass
+    """
+    Create a counting closure:
+    • Return a function that counts how many times it’s been called
+    • Each call should return the current count (starting from 1)
+    • The counter should persist between calls
+    • Creating two separate counters must yield independent state.
+    • Use closure to maintain state without global variables
+    """
+    count = 0
+
+    def counter() -> int:
+        nonlocal count
+        count += 1
+        return count
+    return counter
 
 
 def spell_accumulator(initial_power: int) -> Callable:
-    pass
+    """
+    Create power accumulator:
+    • Return a function that accumulates power over time
+    • Each call adds the given amount to the total power
+    • Return the new total power after each addition
+    • Start with initial_power as the base
+    """
+    def accumulator(amount: int) -> int:
+        nonlocal initial_power
+        initial_power += amount
+        return initial_power
+    return accumulator
 
 
 def enchantment_factory(enchantment_type: str) -> Callable:
-    pass
+    """
+    Create enchantment functions:
+    • Return a function that applies the specified enchantment
+    • The returned fn takes an item name and returns enchanted description
+    • Format: "enchantment_type item_name" (e.g., "Flaming Sword")
+    • Each factory creates functions with different enchantment types
+    """
 
 
 def memory_vault() -> dict[str, Callable]:
+    """
+    Create a memory management system:
+    • Return a dict with ’store’ and ’recall’ functions
+    • ’store’ fn: takes (k, v) and stores the memory
+    • ’recall’ fn: takes (k) and returns stored v or "Memory not found"
+    • Use closure to maintain private memory storage
+    """
     pass
 
 
@@ -61,8 +99,8 @@ def memory_vault() -> dict[str, Callable]:
 
 def main() -> None:
 
-    initial_powers = [74, 62, 50]
-    power_additions = [5, 14, 5, 8, 12]
+    initial_powers = [100, 150, 200, 250, 300]
+    power_additions = [20, 30]
     enchantment_types = ['Flaming', 'Shocking', 'Frozen']
     items_to_enchant = ['Cloak', 'Armor', 'Wand', 'Amulet']
 
@@ -72,6 +110,14 @@ def main() -> None:
         print()
         print(color(3, ' Testing Mage Counter...'))
 
+        counter_a = mage_counter()
+        for idx in range(2):
+            print(f' counter_a call {idx + 1}: {counter_a()}')
+
+        counter_b = mage_counter()
+        for idx in range(1):
+            print(f' counter_b call {idx + 1}: {counter_b()}')
+
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
 
@@ -80,6 +126,10 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing Spell Accumulator...'))
+        ip = initial_powers[0]
+        accumulator = spell_accumulator(ip)
+        for amount in power_additions:
+            print(f' Base {ip}, add {amount}: {accumulator(amount)}')
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))

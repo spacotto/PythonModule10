@@ -64,6 +64,10 @@ from lambda_spells import (artifact_sorter, power_filter,
 from higher_magic import (spell_combiner, power_amplifier,
                           conditional_caster, spell_sequence)
 
+from scope_mysteries import (mage_counter, spell_accumulator,
+                             enchantment_factory, memory_vault)
+
+
 # ----------------------------------------------------------------------------
 #  Enums
 # ----------------------------------------------------------------------------
@@ -418,10 +422,10 @@ class MemoryDepths():
         print(color(7, ' 🪄 Exercise 2: Memory Depths'))
         print(" " + "-" * 60)
 
-        tests = [('Combining spells', self._run_spell_combiner),
-                  ('Amplifying power', self._run_power_amplifier),
-                  ('Casting conditionally', self._run_conditional_caster),
-                  ('Casting spell sequence', self._run_spell_sequence)]
+        tests = [('Counting closure', self._run_mage_counter),
+                  ('Accumulating power', self._run_spell_accumulator),
+                  ('Enchantmenting functions', self._run_enchantment_factory),
+                  ('Managing memory', self._run_memory_vault)]
 
         for test in tests:
             print()
@@ -429,6 +433,30 @@ class MemoryDepths():
             print(" " + "-" * 60)
             test[1]()
         print()
+
+    def _run_mage_counter(self) -> None:
+        mage_counters = []
+        for idx in range(random.randint(2, 7)):
+            mage_counters.append(mage_counter())
+
+        for i in range(random.randint(2, 5)):
+            for j in range(len(mage_counters)):
+                n = j + 1
+                print(f' {color(n, f"counter_{n}")} '
+                      f'call {i + 1}: {mage_counters[j]()}')
+
+    def _run_spell_accumulator(self) -> None:
+        initial_power = random.randint(0, 1000)
+        accumulator = spell_accumulator(initial_power)
+        for _ in range(random.randint(2, 5)):
+            amount = random.randint(0, 1000)
+            print(f' Base {initial_power}, add {amount}: {accumulator(amount)}')
+
+    def _run_enchantment_factory(self) -> None:
+        pass
+
+    def _run_memory_vault(self) -> None:
+        pass
 
 
 # ----------------------------------------------------------------------------
@@ -449,11 +477,11 @@ def func_mage() -> None:
     print(color(7, f" {'n.':<5}{'Exercise':<20}{'Description'}"))
     print(" " + "-" * 60)
     print(f" {'0':<5}{'Lambda Sanctum':<20}"
-          "Use lambda to manipulate data")
+          "Learn about lambda functions")
     print(f" {'1':<5}{'Higher Realm':<20}"
-          "Use Callable to create functions")
+          "Learn about Callable data type")
     print(f" {'2':<5}{'Memory Depths':<20}"
-          "...")
+          "Learn about lexical scoping")
     print(f" {'3':<5}{'Ancient Library':<20}"
           "...")
     print(f" {'4':<5}{'Master’s Tower':<20}"
@@ -467,7 +495,7 @@ def func_mage() -> None:
     elif choice == "1":
         HigherRealm().run_test()
     elif choice == "2":
-        pass
+        MemoryDepths().run_test()
     elif choice == "3":
         pass
     elif choice == "4":
