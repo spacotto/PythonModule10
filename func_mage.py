@@ -474,6 +474,48 @@ class MemoryDepths():
 
 
 # ----------------------------------------------------------------------------
+#  Exercise 3: Ancient Library
+# ----------------------------------------------------------------------------
+
+class AncientLibrary():
+
+    def __init__(self) -> None:
+        pass
+
+    def run_test(self) -> None:
+
+        print()
+        print(" " + "-" * 60)
+        print(color(7, ' 🪄 Exercise 3: Ancient Library'))
+        print(" " + "-" * 60)
+
+        tests = [('...', self._run_spell_reducer),
+                  ('...', self._run_partial_enchanter),
+                  ('...', self._run_memoized_fibonacci),
+                  ('...', self._run_spell_dispatcher)]
+
+        for test in tests:
+            print()
+            print(color(3, f' {test[0]}...'))
+            print(" " + "-" * 60)
+            test[1]()
+
+        print()
+
+    def _run_spell_reducer(self) -> None:
+        pass
+
+    def _run_partial_enchanter(self) -> None:
+        pass
+
+    def _run_memoized_fibonacci(self) -> None:
+        pass
+
+    def _run_spell_dispatcher(self) -> None:
+        pass
+
+
+# ----------------------------------------------------------------------------
 #  FuncMage Chronicles
 # ----------------------------------------------------------------------------
 
@@ -511,7 +553,7 @@ def func_mage() -> None:
     elif choice == "2":
         MemoryDepths().run_test()
     elif choice == "3":
-        pass
+        AncientLibrary().run_test()
     elif choice == "4":
         pass
     else:
