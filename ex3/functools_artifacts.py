@@ -8,6 +8,9 @@ Exercise 3: Ancient Library
 # ----------------------------------------------------------------------------
 
 from collections.abc import Callable
+import functools
+import operator
+from typing import Any
 
 
 # ----------------------------------------------------------------------------
@@ -49,7 +52,20 @@ def spell_reducer(spells: list[int], operation: str) -> int:
     • If spells is empty, return 0
     • If operation is unknown, properly handle the error
     """
-    pass
+    if not spells:
+        return 0
+
+    ops = {
+        'add': operator.add,
+        'multiply': operator.mul,
+        'max': max,
+        'min': min
+    }
+
+    if operation not in ops:
+        raise ValueError(f"Unknown operation: {operation}")
+
+    return functools.reduce(ops[operation], spells)
 
 
 def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
@@ -60,9 +76,14 @@ def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
     • Use functools.partial to create 3 specialized versions
     • Each version pre-filling power=50 and the element
     """
-    pass
+    return {
+        'flaming': functools.partial(base_enchantment, 50, 'Flaming'),
+        'frozen': functools.partial(base_enchantment, 50, 'Frozen'),
+        'shocking': functools.partial(base_enchantment, 50, 'Shocking')
+    }
 
 
+@functools.lru_cache(maxsize=None)
 def memoized_fibonacci(n: int) -> int:
     """
     Cached fibonacci:
@@ -72,7 +93,11 @@ def memoized_fibonacci(n: int) -> int:
     • The cache should improve performance for repeated calls
     • Return the nth fibonacci number
     """
-    pass
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
 
 def spell_dispatcher() -> Callable[[Any], str]:
@@ -84,7 +109,23 @@ def spell_dispatcher() -> Callable[[Any], str]:
     • Return the dispatcher function
     • Each type should have appropriate spell behavior
     """
-    pass
+    @functools.singledispatch
+    def dispatcher(spell: Any) -> str:
+        return "Unknown spell type"
+
+    @dispatcher.register(int)
+    def _(spell: int) -> str:
+        return f"{spell} damage"
+
+    @dispatcher.register(str)
+    def _(spell: str) -> str:
+        return spell
+
+    @dispatcher.register(list)
+    def _(spell: list) -> str:
+        return f"{len(spell)} spells"
+
+    return dispatcher
 
 
 # ----------------------------------------------------------------------------
@@ -93,42 +134,48 @@ def spell_dispatcher() -> Callable[[Any], str]:
 
 def main() -> None:
 
+    # --- Testing spell_reducer()
+
     spell_powers = [50, 44, 27, 17, 34, 16]
-    operations = ['add', 'multiply', 'max', 'min']
+    operations = {'Sum': 'add',
+                  'Product': 'multiply',
+                  'Max': 'max',
+                  'Min': 'min'}
+
+    try:
+        print()
+        print(color(3, ' Testing spell reducer...'))
+        for k, v in operations.items():
+            print(f' {color(7, k):<22}{spell_reducer(spell_powers, v)}')
+
+    except Exception as e:
+        print(color(5, f'\n ERROR! {e}\n'))
+
+    # --- Testing partial_enchanter()
+
+    try:
+        print()
+        print(color(3, ' Testing partial enchanter...'))
+
+    except Exception as e:
+        print(color(5, f'\n ERROR! {e}\n'))
+
+    # --- Testing memoized_fibonacci()
+
     fibonacci_tests = [16, 19, 15]
 
-    # --- Testing ()
-
     try:
         print()
-        print(color(3, ' Testing ...'))
+        print(color(3, ' Testing memoized fibonacci...'))
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
 
-    # --- Testing ()
+    # --- Testing spell_dispatcher()
 
     try:
         print()
-        print(color(3, ' Testing ...'))
-
-    except Exception as e:
-        print(color(5, f'\n ERROR! {e}\n'))
-
-    # --- Testing ()
-
-    try:
-        print()
-        print(color(3, ' Testing ...'))
-
-    except Exception as e:
-        print(color(5, f'\n ERROR! {e}\n'))
-
-    # --- Testing ()
-
-    try:
-        print()
-        print(color(3, ' Testing ...'))
+        print(color(3, ' Testing spell dispatcher...'))
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))

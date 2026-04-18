@@ -39,6 +39,8 @@ def color(code: int, text: str) -> str:
 import os
 import sys
 import random
+import operator
+import functools
 from enum import Enum
 from typing import List, Dict, Any
 from collections.abc import Callable
@@ -51,7 +53,7 @@ def pathfinder(folder_name: str) -> None:
         sys.path.insert(0, folder_path)
 
 
-FOLDERS: list = ['ex0', 'ex1', 'ex2', 'ex3' 'ex4']
+FOLDERS: list = ['ex0', 'ex1', 'ex2', 'ex3', 'ex4']
 for F in FOLDERS:
     try:
         pathfinder(F)
@@ -67,6 +69,8 @@ from higher_magic import (spell_combiner, power_amplifier,
 from scope_mysteries import (mage_counter, spell_accumulator,
                              enchantment_factory, memory_vault)
 
+from functools_artifacts import (spell_reducer, partial_enchanter,
+                                 memoized_fibonacci, spell_dispatcher)
 
 # ----------------------------------------------------------------------------
 #  Enums
@@ -489,7 +493,7 @@ class AncientLibrary():
         print(color(7, ' 🪄 Exercise 3: Ancient Library'))
         print(" " + "-" * 60)
 
-        tests = [('...', self._run_spell_reducer),
+        tests = [('Transforming spells power', self._run_spell_reducer),
                   ('...', self._run_partial_enchanter),
                   ('...', self._run_memoized_fibonacci),
                   ('...', self._run_spell_dispatcher)]
@@ -503,7 +507,18 @@ class AncientLibrary():
         print()
 
     def _run_spell_reducer(self) -> None:
-        pass
+        operations: dict = {'Sum': 'add',
+                            'Product': 'multiply',
+                            'Max': 'max',
+                            'Min': 'min'}
+
+        spell_powers: list = []
+        for _ in range(6):
+            n = random.randint(-100, 100)
+            spell_powers.append(n)
+
+        for k, v in operations.items():
+            print(f' {color(7, k):<22}{spell_reducer(spell_powers, v)}')
 
     def _run_partial_enchanter(self) -> None:
         pass
@@ -539,7 +554,7 @@ def func_mage() -> None:
     print(f" {'2':<5}{'Memory Depths':<20}"
           "Learn about lexical scoping")
     print(f" {'3':<5}{'Ancient Library':<20}"
-          "...")
+          "Learn about functools")
     print(f" {'4':<5}{'Master’s Tower':<20}"
           "...")
 
