@@ -105,7 +105,8 @@ def spell_dispatcher() -> Callable[[Any], str]:
     Create single dispatch system:
     • Use decorator functools.singledispatch to create a spell system
     • The base function receives Any and handles unknown spell type
-    • Handle different types: int (damage spell), str (enchantment), list (multi-cast)
+    • Handle different types:
+      int (damage spell), str (enchantment), list (multi-cast)
     • Return the dispatcher function
     • Each type should have appropriate spell behavior
     """
@@ -189,6 +190,18 @@ def main() -> None:
     try:
         print()
         print(color(3, ' Testing spell dispatcher...'))
+        spells: list = [42, 'fireball', ['a', 'b', 'c'], None]
+        sp = spell_dispatcher()
+        for spell in spells:
+            if isinstance(spell, int):
+                print(f' {color(7, "Damage spell"):<26} {sp(spell)}')
+            elif isinstance(spell, str):
+                print(f' {color(7, "Enchantment"):<26} {sp(spell)}')
+            elif isinstance(spell, list):
+                print(f' {color(7, "Multi-cast"):<26} {sp(spell)}')
+            else:
+                print(' ' + sp(spell))
+
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))

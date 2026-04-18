@@ -218,11 +218,14 @@ def generate_artifacts(count: int) -> List[Dict[str, Any]]:
 
 def generate_spells(count: int) -> List[str]:
     """Generate a list of spell names."""
-    spells = [spell.value for spell in SpellNames]
-    return random.sample(spells, min(count, len(spells)))
+    spells = []
+    for _ in range(count):
+        spells.append(random.choice(list(SpellNames)).value)
+    return spells
 
 
 def generate_spell_function() -> Callable:
+    """Generate a function composed by random elemnts."""
     fn_name, effect, mod = random.choice(list(SpellFunctions)).value
     def fn_name(target: str, power: int) -> str:
         return f'{effect} {target}: {mod}{power} HP'
@@ -230,6 +233,7 @@ def generate_spell_function() -> Callable:
 
 
 def valid_cast(target: str, power: int) -> bool:
+    """Checks if """
     valid_targets = [target.value for target in Targets]
     if target not in valid_targets:
         return False
@@ -241,6 +245,22 @@ def valid_cast(target: str, power: int) -> bool:
 def base_enchantment(power: int, element: str, target: str) -> str:
     return f'{target} enchanted into {element} {target} (+{power} power)'
 
+
+def generate_spell_dispatcher(count: int) -> List[Any]:
+    to_dispatch: List[Any] = []
+
+    for _ in range(count):
+        rc = random.choice(['int', 'str', 'list'])
+        if rc == 'int':
+            item = random.randint(1, 100)
+        elif rc == 'str':
+            item = random.choice(list(SpellNames)).value
+        else:
+            item = generate_spells(random.randint(3, 30))
+        to_dispatch.append(item)
+
+    to_dispatch.append(None)
+    return to_dispatch
 
 # ----------------------------------------------------------------------------
 #  Exercise 0: Lambda Sanctum
@@ -534,7 +554,17 @@ class AncientLibrary():
             print(f' {color(7, f'Fib({n})'):<21} {memoized_fibonacci(n)}')
 
     def _run_spell_dispatcher(self) -> None:
-        pass
+       dispatcher = spell_dispatcher()
+       spells = generate_spell_dispatcher(10)
+       for spell in spells:
+           if isinstance(spell, int):
+               print(f' {color(7, "Damage spell"):<26} {dispatcher(spell)}')
+           elif isinstance(spell, str):
+               print(f' {color(7, "Enchantment"):<26} {dispatcher(spell)}')
+           elif isinstance(spell, list):
+               print(f' {color(7, "Multi-cast"):<26} {dispatcher(spell)}')
+           else:
+               print(' ' + dispatcher(spell))
 
 
 # ----------------------------------------------------------------------------
