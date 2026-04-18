@@ -173,11 +173,13 @@ def main() -> None:
 
     # --- Testing memoized_fibonacci()
 
-    fibonacci_tests = [16, 19, 15]
+    fibonacci_tests = [0, 1, 10, 15]
 
     try:
         print()
         print(color(3, ' Testing memoized fibonacci...'))
+        for n in fibonacci_tests:
+            print(f' {color(7, f'Fib({n})'):<21} {memoized_fibonacci(n)}')
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))

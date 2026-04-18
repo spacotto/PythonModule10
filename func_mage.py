@@ -494,7 +494,7 @@ class AncientLibrary():
 
         tests = [('Transforming spells power', self._run_spell_reducer),
                   ('Partially enchanting', self._run_partial_enchanter),
-                  ('...', self._run_memoized_fibonacci),
+                  ('Memoizing Fibonacci', self._run_memoized_fibonacci),
                   ('...', self._run_spell_dispatcher)]
 
         for test in tests:
@@ -526,7 +526,12 @@ class AncientLibrary():
            print(' ' + v(target))
 
     def _run_memoized_fibonacci(self) -> None:
-        pass
+        fibonacci_tests = [0, 1]
+        for _ in range(5):
+            fibonacci_tests.append(random.randint(2, 100))
+        fibonacci_tests = set(fibonacci_tests)
+        for n in sorted(fibonacci_tests):
+            print(f' {color(7, f'Fib({n})'):<21} {memoized_fibonacci(n)}')
 
     def _run_spell_dispatcher(self) -> None:
         pass
