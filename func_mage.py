@@ -99,6 +99,13 @@ class MageNames(str, Enum):
     ASH = "Ash"
 
 
+class InvalidMageNames(str, Enum):
+    IMN0 = 'Jo'
+    IMN1 = 'A'
+    IMN2 = 'Alex123'
+    IMN3 = 'Test@Name'
+
+
 class Elements(str, Enum):
     FIRE = "fire"
     ICE = "ice"
