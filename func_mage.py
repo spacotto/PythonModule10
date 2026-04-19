@@ -72,6 +72,10 @@ from scope_mysteries import (mage_counter, spell_accumulator,
 from functools_artifacts import (spell_reducer, partial_enchanter,
                                  memoized_fibonacci, spell_dispatcher)
 
+from decorator_mastery import (spell_timer, power_validator,
+                               retry_spell, MageGuild)
+
+
 # ----------------------------------------------------------------------------
 #  Enums
 # ----------------------------------------------------------------------------
@@ -569,6 +573,48 @@ class AncientLibrary():
 
 
 # ----------------------------------------------------------------------------
+#  Exercise 4: Master’s Tower
+# ----------------------------------------------------------------------------
+
+class MasterTower():
+
+    def __init__(self) -> None:
+        pass
+
+    def run_test(self) -> None:
+
+        print()
+        print(" " + "-" * 60)
+        print(color(7, ' 🪄 Exercise 4: Master’s Tower'))
+        print(" " + "-" * 60)
+
+        tests = [('', self._run_spell_timer),
+                  ('', self._run_power_validator),
+                  ('', self._run_retry_spell),
+                  ('', self._run_mage_guild)]
+
+        for test in tests:
+            print()
+            print(color(3, f' {test[0]}...'))
+            print(" " + "-" * 60)
+            test[1]()
+
+        print()
+
+    def _run_spell_timer(self) -> None:
+        pass
+
+    def _run_power_validator(self) -> None:
+        pass
+
+    def _run_retry_spell(self) -> None:
+        pass
+
+    def _run_mage_guild(self) -> None:
+        pass
+
+
+# ----------------------------------------------------------------------------
 #  FuncMage Chronicles
 # ----------------------------------------------------------------------------
 
@@ -608,7 +654,7 @@ def func_mage() -> None:
     elif choice == "3":
         AncientLibrary().run_test()
     elif choice == "4":
-        pass
+        MasterTower().run_test()
     else:
         print(color(5, ' ERROR! Invalid choice! Please enter 0, 1, 2, 3, or 4'))
 
