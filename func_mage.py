@@ -81,55 +81,54 @@ from decorator_mastery import (spell_timer, power_validator,
 # ----------------------------------------------------------------------------
 
 class MageNames(str, Enum):
-    ALEX = "Alex"
-    JORDAN = "Jordan"
-    RILEY = "Riley"
-    CASEY = "Casey"
-    MORGAN = "Morgan"
-    SAGE = "Sage"
-    RIVER = "River"
-    PHOENIX = "Phoenix"
-    EMBER = "Ember"
-    STORM = "Storm"
-    LUNA = "Luna"
-    NOVA = "Nova"
-    ZARA = "Zara"
-    KAI = "Kai"
-    ROWAN = "Rowan"
-    ASH = "Ash"
+    MN0 = 'Alex'
+    MN1 = 'Morgana'
+    MN2 = 'Luna'
+    MN3 = 'Nova'
+    MN4 = 'Merlin'
+    MN5 = 'Ahri'
+    MN6 = 'Karma'
+    MN7 = 'Lissandra'
+    MN8 = 'Orianna'
+    MN9 = 'Syndra'
+    M10 = 'Cartian'
 
 
-class InvalidMageNames(str, Enum):
+class FakeMageNames(str, Enum):
     IMN0 = 'Jo'
-    IMN1 = 'A'
+    IMN1 = 'B4N4N4'
     IMN2 = 'Alex123'
     IMN3 = 'Test@Name'
+    IMN4 = '\[Y]/'
+    IMN5 = '(╯°□°)╯ ┻━┻'
+    IMN6 = 'ᕕ( ᐛ )ᕗ'
+    IMN7 = 'ಠ_ಠ'
 
 
 class Elements(str, Enum):
-    FIRE = "fire"
-    ICE = "ice"
-    LIGHTNING = "lightning"
-    EARTH = "earth"
-    WIND = "wind"
-    WATER = "water"
-    LIGHT = "light"
-    SHADOW = "shadow"
+    FIRE = 'fire'
+    ICE = 'ice'
+    LIGHTNING = 'lightning'
+    EARTH = 'earth'
+    WIND = 'wind'
+    WATER = 'water'
+    LIGHT = 'light'
+    SHADOW = 'shadow'
 
 
 class SpellNames(str, Enum):
-    FIREBALL = "fireball"
-    HEAL = "heal"
-    SHIELD = "shield"
-    LIGHTNING = "lightning"
-    FREEZE = "freeze"
-    EARTHQUAKE = "earthquake"
-    TORNADO = "tornado"
-    TSUNAMI = "tsunami"
-    FLASH = "flash"
-    DARKNESS = "darkness"
-    METEOR = "meteor"
-    BLIZZARD = "blizzard"
+    FIREBALL = 'fireball'
+    HEAL = 'heal'
+    SHIELD = 'shield'
+    LIGHTNING = 'lightning'
+    FREEZE = 'freeze'
+    EARTHQUAKE = 'earthquake'
+    TORNADO = 'tornado'
+    TSUNAMI = 'tsunami'
+    FLASH = 'flash'
+    DARKNESS = 'darkness'
+    METEOR = 'meteor'
+    BLIZZARD = 'blizzard'
 
 
 class SpellFunctions(Enum):
@@ -148,53 +147,53 @@ class SpellFunctions(Enum):
 
 
 class ArtifactNames(str, Enum):
-    CRYSTAL_ORB = "Crystal Orb"
-    FIRE_STAFF = "Fire Staff"
-    ICE_WAND = "Ice Wand"
-    LIGHTNING_ROD = "Lightning Rod"
-    EARTH_SHIELD = "Earth Shield"
-    WIND_CLOAK = "Wind Cloak"
-    WATER_CHALICE = "Water Chalice"
-    SHADOW_BLADE = "Shadow Blade"
-    LIGHT_PRISM = "Light Prism"
-    STORM_CROWN = "Storm Crown"
+    CRYSTAL_ORB = 'Crystal Orb'
+    FIRE_STAFF = 'Fire Staff'
+    ICE_WAND = 'Ice Wand'
+    LIGHTNING_ROD = 'Lightning Rod'
+    EARTH_SHIELD = 'Earth Shield'
+    WIND_CLOAK = 'Wind Cloak'
+    WATER_CHALICE = 'Water Chalice'
+    SHADOW_BLADE = 'Shadow Blade'
+    LIGHT_PRISM = 'Light Prism'
+    STORM_CROWN = 'Storm Crown'
 
 
 class ArtifactTypes(str, Enum):
-    WEAPON = "weapon"
-    FOCUS = "focus"
-    ARMOR = "armor"
-    ACCESSORY = "accessory"
-    RELIC = "relic"
+    WEAPON = 'weapon'
+    FOCUS = 'focus'
+    ARMOR = 'armor'
+    ACCESSORY = 'accessory'
+    RELIC = 'relic'
 
 
 class EnchantmentTypes(str, Enum):
-    FLAMING = "Flaming"
-    FROZEN = "Frozen"
-    SHOCKING = "Shocking"
-    EARTHEN = "Earthen"
-    WINDY = "Windy"
-    FLOWING = "Flowing"
-    RADIANT = "Radiant"
-    DARK = "Dark"
+    FLAMING = 'Flaming'
+    FROZEN = 'Frozen'
+    SHOCKING = 'Shocking'
+    EARTHEN = 'Earthen'
+    WINDY = 'Windy'
+    FLOWING = 'Flowing'
+    RADIANT = 'Radiant'
+    DARK = 'Dark'
 
 
 class Items(str, Enum):
-    SWORD = "Sword"
-    SHIELD = "Shield"
-    STAFF = "Staff"
-    WAND = "Wand"
-    ARMOR = "Armor"
-    RING = "Ring"
-    AMULET = "Amulet"
-    CLOAK = "Cloak"
+    SWORD = 'Sword'
+    SHIELD = 'Shield'
+    STAFF = 'Staff'
+    WAND = 'Wand'
+    ARMOR = 'Armor'
+    RING = 'Ring'
+    AMULET = 'Amulet'
+    CLOAK = 'Cloak'
 
 
 class Targets(str, Enum):
-    DRAGON = "Dragon"
-    GOBLIN = "Goblin"
-    WIZARD = "Wizard"
-    KNIGHT = "Knight"
+    DRAGON = 'Dragon'
+    GOBLIN = 'Goblin'
+    WIZARD = 'Wizard'
+    KNIGHT = 'Knight'
 
 
 # ----------------------------------------------------------------------------
@@ -212,6 +211,18 @@ def generate_mages(count: int) -> List[Dict[str, Any]]:
         }
         mages.append(mage)
     return mages
+
+
+def generate_mage_names(count: int) -> List[str]:
+    """Generate a list of mage names (valid and invalid)."""
+    names = []
+    for _ in range(count):
+        if random.choice([True, False]):
+            name = random.choice(list(MageNames)).value
+        else:
+            name = random.choice(list(FakeMageNames)).value
+        names.append(name)
+    return names
 
 
 def generate_artifacts(count: int) -> List[Dict[str, Any]]:
@@ -237,14 +248,26 @@ def generate_spells(count: int) -> List[str]:
 
 def generate_spell_function() -> Callable:
     """Generate a function composed by random elemnts."""
-    fn_name, effect, mod = random.choice(list(SpellFunctions)).value
-    def fn_name(target: str, power: int) -> str:
+    spell, effect, mod = random.choice(list(SpellFunctions)).value
+    def spell(target: str, power: int) -> str:
         return f'{effect} {target}: {mod}{power} HP'
-    return fn_name
+    return spell
+
+
+def generate_spell() -> str:
+    return random.choice(list(SpellNames)).value
+
+
+def generate_target() -> str:
+    return random.choice(list(Targets)).value
+
+
+def generate_spell_power() -> int:
+    return random.randint(10, 50)
 
 
 def valid_cast(target: str, power: int) -> bool:
-    """Checks if """
+    """Checks if a spell can be casted."""
     valid_targets = [target.value for target in Targets]
     if target not in valid_targets:
         return False
@@ -273,6 +296,16 @@ def generate_spell_dispatcher(count: int) -> List[Any]:
         to_dispatch.append(item)
 
     return to_dispatch
+
+
+def generate_retry_spell(max_attempts: int):
+    @retry_spell(max_attempts)
+    def cast_retry_spell(power: int) -> str:
+        if power < 1:
+            raise ValueError
+        return ' Waaaaaaagh spelled!'
+    return cast_retry_spell
+
 
 # ----------------------------------------------------------------------------
 #  Exercise 0: Lambda Sanctum
@@ -405,7 +438,7 @@ class HigherRealm():
         combined = spell_combiner(generate_spell_function(),
                                   generate_spell_function())
         target = random.choice(list(Targets)).value
-        s1, s2 = combined(target, random.randint(5, 25))
+        s1, s2 = combined(target, generate_spell_power())
         print(f' {color(7, "Spell 1"):<24}{s1}')
         print(f' {color(7, "Spell 2"):<24}{s2}')
 
@@ -413,7 +446,7 @@ class HigherRealm():
         spell = generate_spell_function()
         amplified_spell = power_amplifier(spell, random.randint(5, 25))
         target = random.choice(list(Targets)).value
-        power = random.randint(5, 25)
+        power = generate_spell_power()
 
         print(f' {color(7, "Base"):<24}{spell(target, power)}')
         print(f' {color(7, "Amplified"):<24}{amplified_spell(target, power)}')
@@ -421,7 +454,7 @@ class HigherRealm():
     def _run_conditional_caster(self) -> None:
         cast_if = conditional_caster(valid_cast, generate_spell_function())
         target = random.choice(list(Targets)).value
-        power = random.randint(5, 25)
+        power = generate_spell_power()
         print(f' {color(6, 'All good'):<24}{cast_if(target, power)}')
         print(f' {color(5, 'Bad target'):<24}{cast_if('Banana', power)}')
         print(f' {color(5, 'Bad power'):<24}{cast_if(target, random.randint(-100, 0))}')
@@ -435,7 +468,7 @@ class HigherRealm():
         cast_all = spell_sequence(to_cast)
 
         target = random.choice(list(Targets)).value
-        power = random.randint(5, 25)
+        power = generate_spell_power()
         casted = cast_all(target, power)
         for spell in casted:
             print(f' {spell}')
@@ -500,7 +533,7 @@ class MemoryDepths():
 
         spells = random.sample([spell.value for spell in SpellNames], 2)
         known, unknown = spells[0], spells[1]
-        power = random.randint(1, 100)
+        power = generate_spell_power()
 
         store(known, power)
         print(f' Memorizing spell: {known} ({power})')
@@ -545,7 +578,7 @@ class AncientLibrary():
 
         spell_powers: list = []
         for _ in range(6):
-            n = random.randint(-100, 100)
+            n = generate_spell_power()
             spell_powers.append(n)
 
         for k, v in operations.items():
@@ -595,10 +628,9 @@ class MasterTower():
         print(color(7, ' 🪄 Exercise 4: Master’s Tower'))
         print(" " + "-" * 60)
 
-        tests = [('', self._run_spell_timer),
-                  ('', self._run_power_validator),
-                  ('', self._run_retry_spell),
-                  ('', self._run_mage_guild)]
+        tests = [('Timing spells', self._run_spell_timer),
+                  ('Retrying spells', self._run_retry_spell),
+                  ('Validating Mage Guild', self._run_mage_guild)]
 
         for test in tests:
             print()
@@ -609,16 +641,48 @@ class MasterTower():
         print()
 
     def _run_spell_timer(self) -> None:
-        pass
-
-    def _run_power_validator(self) -> None:
-        pass
+        spell =  generate_spell_function()
+        wrapper = spell_timer(spell)
+        target = random.choice(list(Targets)).value
+        power = generate_spell_power()
+        print(' ' + wrapper(target, power))
 
     def _run_retry_spell(self) -> None:
-        pass
+        spell = generate_retry_spell(random.randint(3, 9))
+        print(color(6, ' Success:'))
+        print(spell(random.randint(1, 100)))
+        print(color(5, '\n Fail:'))
+        print(spell(random.randint(-100, 0)))
+        print(color(3, '\n Random:'))
+        print(spell(random.randint(-100, 100)))
 
     def _run_mage_guild(self) -> None:
-        pass
+        self._run_validate_mage_name()
+        print()
+        self._run_cast_spell()
+
+    def _run_validate_mage_name(self) -> None:
+        mg = MageGuild()
+        col: int = 3
+        row: int = 5
+        for _ in range(row):
+            mage_names = generate_mage_names(col)
+            to_print: str = ' '
+            for name in mage_names:
+                res = mg.validate_mage_name(name)
+                if res:
+                    to_join = f'[{color(6, f"{str(res)}")}]  {name}'
+                else:
+                    to_join = f'[{color(5, f"{str(res)}")}] {name}'
+                to_print += f'{to_join:<32}'
+            print(to_print)
+
+    def _run_cast_spell(self) -> None:
+        mg = MageGuild()
+        for _ in range(6):
+            spell_name = generate_spell()
+            power = random.randint(1, 20)
+            print(' ' + mg.cast_spell(spell_name, power))
 
 
 # ----------------------------------------------------------------------------
@@ -645,9 +709,9 @@ def func_mage() -> None:
     print(f" {'2':<5}{'Memory Depths':<20}"
           "Learn about lexical scoping")
     print(f" {'3':<5}{'Ancient Library':<20}"
-          "Learn about functools")
+           "Learn about functools (part 1)")
     print(f" {'4':<5}{'Master’s Tower':<20}"
-          "...")
+          "Learn about functools (part 2)")
 
     print()
     choice = input(color(3, ' 🪄 Enter your choice (0/1/2/3/4): '))

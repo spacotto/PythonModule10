@@ -81,7 +81,7 @@ def power_validator(min_power: int) -> Callable:
 
             if power >= min_power:
                 return func(*args, **kwargs)
-            return "Insufficient power for this spell"
+            return color(3, "Insufficient power for this spell")
         return wrapper
     return decorator
 
@@ -135,7 +135,7 @@ class MageGuild():
         • Otherwise return:
           "Insufficient power for this spell"
         """
-        return f"Successfully cast {spell_name} with {power} power"
+        return color(6, f"Successfully cast {spell_name} with {power} power")
 
 
 # ----------------------------------------------------------------------------
