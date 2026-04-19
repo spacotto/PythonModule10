@@ -250,16 +250,17 @@ def generate_spell_dispatcher(count: int) -> List[Any]:
     to_dispatch: List[Any] = []
 
     for _ in range(count):
-        rc = random.choice(['int', 'str', 'list'])
+        rc = random.choice(['int', 'str', 'list', 'unknown'])
         if rc == 'int':
-            item = random.randint(1, 100)
+            item: int = random.randint(1, 100)
         elif rc == 'str':
-            item = random.choice(list(SpellNames)).value
+            item: str = random.choice(list(SpellNames)).value
+        elif rc == 'list':
+            item: list = generate_spells(random.randint(3, 30))
         else:
-            item = generate_spells(random.randint(3, 30))
+            item = None
         to_dispatch.append(item)
 
-    to_dispatch.append(None)
     return to_dispatch
 
 # ----------------------------------------------------------------------------
@@ -558,13 +559,13 @@ class AncientLibrary():
        spells = generate_spell_dispatcher(10)
        for spell in spells:
            if isinstance(spell, int):
-               print(f' {color(7, "Damage spell"):<26} {dispatcher(spell)}')
+               print(color(5, ' Damage spell') + f' ({dispatcher(spell)})')
            elif isinstance(spell, str):
-               print(f' {color(7, "Enchantment"):<26} {dispatcher(spell)}')
+               print(color(6, ' Enchantment') + f' ({dispatcher(spell)})')
            elif isinstance(spell, list):
-               print(f' {color(7, "Multi-cast"):<26} {dispatcher(spell)}')
+               print(color(2, ' Multi-cast') + f' ({dispatcher(spell)})')
            else:
-               print(' ' + dispatcher(spell))
+               print(' ' + color(3, dispatcher(spell)))
 
 
 # ----------------------------------------------------------------------------

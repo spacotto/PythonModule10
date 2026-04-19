@@ -55,7 +55,7 @@ def spell_reducer(spells: list[int], operation: str) -> int:
     if not spells:
         return 0
 
-    ops = {
+    ops: dict[str, Callable[[int, int], int]] = {
         'add': operator.add,
         'multiply': operator.mul,
         'max': max,
@@ -166,8 +166,8 @@ def main() -> None:
         print()
         print(color(3, ' Testing partial enchanter...'))
         pe = partial_enchanter(base_enchantment)
-        for k, v in pe.items():
-            print(' ' + v('Sword'))
+        for k, spell in pe.items():
+            print(' ' + spell('Sword'))
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
@@ -201,7 +201,6 @@ def main() -> None:
                 print(f' {color(7, "Multi-cast"):<26} {sp(spell)}')
             else:
                 print(' ' + sp(spell))
-
 
     except Exception as e:
         print(color(5, f'\n ERROR! {e}\n'))
